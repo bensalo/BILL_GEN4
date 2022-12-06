@@ -1,5 +1,4 @@
 !.gitignore 
-!src/*.py
 src/.env
 src/__pycache__/pdf_gen.cpython-39.pyc
 src/__pycache__/database.cpython-39.pyc
