@@ -25,17 +25,17 @@ class row1(customtkinter.CTkFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.radio_button_frame_1 = cc.ChooseFromDB_RBFrame(self, header_name="Kunden auswählen")
-        self.radio_button_frame_1.grid(row=0, column=0, padx=20, pady=20)
+        self.radio_button_frame_1.grid(row=0, column=0, sticky="NSEW", padx=20, pady=20)
 
         self.button = customtkinter.CTkButton(self, text="Auswählen", command=self.get_kunden_id)
         self.button.grid(row=1, column=0, padx=20, pady=20)
 
         Rechnungsnummer = [["Rechnungsnummer_Base:",Selected_User_rn_temp],["Letzte_Rechnungsnummer",Selected_User_rn_last],["ID:",Selected_User_ID]]     
         self.rechnungsnummer_frame = cc.show_values_Frame(self, header_name="Rechnungsnummer", values = Rechnungsnummer)
-        self.rechnungsnummer_frame.grid(row=2, column=0, padx=20, pady=20)
+        self.rechnungsnummer_frame.grid(row=2, column=0, columnspan=2, sticky="NSEW",padx=20, pady=20)
         KundenDaten = [["Name:",""],["Adresse:",""],["Ort:",""],["E-Mail:",""]]
         self.kundendaten_frame = cc.show_values_Frame(self, header_name="Kundendaten", values = KundenDaten)
-        self.kundendaten_frame.grid(row=0, column=1, padx=20, pady=20)
+        self.kundendaten_frame.grid(row=0, column=1, sticky="NSEW", padx=20, pady=20)
 
 
     def get_kunden_id(self):
@@ -55,10 +55,10 @@ class row1(customtkinter.CTkFrame):
         Selected_User_Ort = kunde["ort"]
         Rechnungsnummer = [["Rechnungsnummer_Base:",kunde["rechnungsnummer_temp"]],["Letzte_Rechnungsnummer:",kunde["letzte_rechnungsnummer"]],["ID:",int(kunden_id)]]
         self.rechnungsnummer_frame = cc.show_values_Frame(self, header_name="Rechnungsnummer", values = Rechnungsnummer)
-        self.rechnungsnummer_frame.grid(row=2, column=0, padx=20, pady=20)
+        self.rechnungsnummer_frame.grid(row=2, column=0, columnspan=2, sticky="NSEW", padx=20, pady=20)
         KundenDaten = [["Name:",kunde["name"]],["Adresse:",kunde["adresse"]],["Ort:",kunde["ort"]],["E-Mail:",kunde["email"]]]
         self.kundendaten_frame = cc.show_values_Frame(self, header_name="Kundendaten", values = KundenDaten)
-        self.kundendaten_frame.grid(row=0, column=1, padx=20, pady=20)
+        self.kundendaten_frame.grid(row=0, column=1, sticky="NSEW", padx=20, pady=20)
 
 
 
@@ -69,7 +69,7 @@ class row2(customtkinter.CTkFrame):
         
 
         self.input_frame_1 = cc.InputFrame(self, header_name="Rechnungsdaten")
-        self.input_frame_1.grid(row=1, column=0, padx=20, pady=20)
+        self.input_frame_1.grid(row=1, column=0, sticky="NSEW", padx=20, pady=20)
 
         self.button = customtkinter.CTkButton(self, text="Auswählen", command=self.save_input_values)
         self.button.grid(row=2, column=0, padx=20, pady=20)
@@ -156,13 +156,13 @@ class App(customtkinter.CTk):
 
         
         self.row1 = row1(master = self)
-        self.row1.grid(row=0, column=0, padx=20, pady=20)
+        self.row1.grid(row=0, column=0, sticky="NSEW", padx=20, pady=20,)
 
         self.row2 = row2(master = self)
-        self.row2.grid(row=0, column=1, padx=20, pady=20)
+        self.row2.grid(row=0, column=1, sticky="NSEW", padx=20, pady=20)
 
         self.row3 = row3(master = self)
-        self.row3.grid(row=0, column=2, rowspan=2, padx=20, pady=20)
+        self.row3.grid(row=0, column=2, sticky="NSEW", rowspan=2, padx=20, pady=20)
 
 
 
