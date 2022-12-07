@@ -1,8 +1,6 @@
+# ignore everything
+*
+
+# dont ignore following:
 !.gitignore 
-src/.env
-src/__pycache__/pdf_gen.cpython-39.pyc
-src/__pycache__/database.cpython-39.pyc
-src/__pycache__/ctk_classes.cpython-39.pyc
-test.pdf
-rechnungen.json
-kunden.json
+!src/*.py
