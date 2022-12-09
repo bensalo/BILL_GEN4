@@ -61,12 +61,11 @@ class row1(customtkinter.CTkFrame):
         self.kundendaten_frame.grid(row=0, column=1, sticky="NSEW", padx=20, pady=20)
 
 
-
 class row2(customtkinter.CTkFrame):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
 
         self.input_frame_1 = cc.InputFrame(self, header_name="Rechnungsdaten")
         self.input_frame_1.grid(row=1, column=0, sticky="NSEW", padx=20, pady=20)
@@ -83,8 +82,6 @@ class row2(customtkinter.CTkFrame):
         Selected_User_rn, Selected_User_Betreff, Selected_User_Datum, Selected_User_Betrag, Selected_User_Briefinhalt = self.input_frame_1.get_values()
 
 
-
-
 class row3(customtkinter.CTkFrame):
 
     def __init__(self, *args, **kwargs):
@@ -95,6 +92,9 @@ class row3(customtkinter.CTkFrame):
 
         self.button = customtkinter.CTkButton(self, text="Rechnung Erstellen", command=self.generate_bill)
         self.button.grid(row=2, column=0, padx=20, pady=20)
+
+        self.button = customtkinter.CTkButton(self, text="Neuer Kunde", command=self.create_new_window)
+        self.button.grid(row=3, column=0, padx=20, pady=20)
         
 
     def preview_bill(self):
@@ -120,9 +120,6 @@ class row3(customtkinter.CTkFrame):
         print("Selected_User_Briefinhalt: ",Selected_User_Briefinhalt)
         print("--------------------")
 
-
-
-
     def generate_bill(self):
         #load template
         #edit word/pdf document
@@ -146,6 +143,40 @@ class row3(customtkinter.CTkFrame):
         db.new_rechnung(Selected_User_ID, Selected_User_Name, Selected_User_Betreff, Selected_User_Datum, Selected_User_Betrag, Selected_User_rn)
         db.update_kunde(Selected_User_ID, Selected_User_rn)
 
+    def create_new_window(self):
+        self.input_user_window =  input_user_window()
+
+    def save_input_values(self):
+            global Selected_User_ID
+            global Selected_User_Name
+            global Selected_User_Adresse
+            global Selected_User_Ort
+            global Selected_User_rn
+            Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_rn = self.input_frame_1.get_values()
+            db.new_kunde(Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_rn)
+            self.destroy()
+            print("Kunde hinzugefügt")
+
+class input_user_window(customtkinter.CTkToplevel):
+    
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            
+            self.input_frame_1 = cc.Input_User_Frame(self, header_name="Kundendaten")
+            self.input_frame_1.grid(row=0, column=0, sticky="NSEW", padx=20, pady=20)
+
+            button = customtkinter.CTkButton(self, text="Speichern", command=self.save_input_values)
+            button.grid(row=1, column=0, padx=20, pady=20)
+
+        def save_input_values(self):
+            Selected_User_Name, Selected_User_Adresse, Selected_User_Ort,Selected_User_email, Selected_User_rn = self.input_frame_1.get_values()
+            db.new_kunde(Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_email, Selected_User_rn)
+            self.destroy()
+            print("Kunde hinzugefügt")
+
+        
+
+
 
 class App(customtkinter.CTk):
     def __init__(self):
@@ -154,7 +185,8 @@ class App(customtkinter.CTk):
         self.geometry("1200x850")
         self.title("BILL_GEN_4")
 
-        
+        # CREATE MAIN ROWS
+
         self.row1 = row1(master = self)
         self.row1.grid(row=0, column=0, sticky="NSEW", padx=20, pady=20,)
 
@@ -163,6 +195,8 @@ class App(customtkinter.CTk):
 
         self.row3 = row3(master = self)
         self.row3.grid(row=0, column=2, sticky="NSEW", rowspan=2, padx=20, pady=20)
+
+
 
 
 

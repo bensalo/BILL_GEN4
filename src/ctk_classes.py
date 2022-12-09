@@ -72,8 +72,53 @@ class InputFrame(customtkinter.CTkFrame):
     def get_values(self):
         return (self.rechnungsnummer_input.get(), self.rechnungsbetreff_input.get(), self.datum.get(), self.betrag.get(), self.briefinhalt.get())
 
+class Input_User_Frame(customtkinter.CTkFrame):
+    def __init__(self, *args, header_name="InputFrame", **kwargs):
+        super().__init__(*args, **kwargs)
 
+        self.header_name = header_name
+        self.name = customtkinter.StringVar(value="")
+        self.adresse = customtkinter.StringVar(value="")
+        self.plz = customtkinter.StringVar(value="")
+        self.email = customtkinter.StringVar(value="")
+        self.rechnungsnummer_temp = customtkinter.StringVar(value="")
 
+        self.header = customtkinter.CTkLabel(self, text=self.header_name)
+        self.header.grid(row=0, column=0, padx=10 , pady=10)
+
+        self.name_label = customtkinter.CTkLabel(self, text="Name:")
+        self.name_label.grid(row=1, column=0, padx=10 , pady=10)
+
+        self.name_in = customtkinter.CTkEntry(self, textvariable=self.name)
+        self.name_in.grid(row=1, column=1, padx=10 , pady=10)
+
+        self.adresse_label = customtkinter.CTkLabel(self, text="Adresse:")
+        self.adresse_label.grid(row=2, column=0, padx=10 , pady=10)
+
+        self.adresse_in = customtkinter.CTkEntry(self, textvariable=self.adresse)
+        self.adresse_in.grid(row=2, column=1, padx=10 , pady=10)
+
+        self.plz_label = customtkinter.CTkLabel(self, text="PLZ:")
+        self.plz_label.grid(row=3, column=0, padx=10 , pady=10)
+
+        self.plz_in = customtkinter.CTkEntry(self, textvariable=self.plz)
+        self.plz_in.grid(row=3, column=1, padx=10 , pady=10)
+
+        self.email_label = customtkinter.CTkLabel(self, text="Email:")
+        self.email_label.grid(row=4, column=0, padx=10 , pady=10)
+
+        self.email_in = customtkinter.CTkEntry(self, textvariable=self.email)
+        self.email_in.grid(row=4, column=1, padx=10 , pady=10)
+
+        self.rechnungsnummer_label = customtkinter.CTkLabel(self, text="Rechnungsnummer:")
+        self.rechnungsnummer_label.grid(row=5, column=0, padx=10 , pady=10)
+
+        self.rechnungsnummer_temp = customtkinter.CTkEntry(self, textvariable=self.rechnungsnummer_temp)
+        self.rechnungsnummer_temp.grid(row=5, column=1, padx=10 , pady=10)
+
+    def get_values(self):
+        return (self.name.get(), self.adresse.get(), self.plz.get(), self.email.get(), self.rechnungsnummer_temp.get())
+ 
 class show_values_Frame(customtkinter.CTkFrame):
     def __init__(self, *args, header_name="Values Frame", values= [], **kwargs):
         super().__init__(*args, **kwargs)

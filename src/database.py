@@ -3,12 +3,7 @@ from tinydb import TinyDB, Query, where, operations
 kunden_db = TinyDB('kunden.json')
 Rechnungen_DB = TinyDB('rechnungen.json')
 
-def new_kunde():
-    name = input("Name: ")
-    adresse = input("Adresse: ")
-    ort = input("Ort: ")
-    email = input("E-Mail: ")
-    rechnungsnummer_temp = input("Rechnungsnummer Template: ")
+def new_kunde(name, adresse, ort, rechnungsnummer_temp, email = "empty"):
     id = kunden_db.__len__()
     kunden_db.insert({'K_id' : str(id), 'name': name, 'adresse': adresse, 'ort': ort, 'email': email, 'rechnungsnummer_temp': rechnungsnummer_temp, 'letzte_rechnungsnummer': "leer"})
 
