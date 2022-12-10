@@ -1,8 +1,7 @@
 from reportlab.pdfgen import canvas 
 
 class mypdf:
-    def __init__(self, filename="test.pdf"):
-        self.filename = filename
+    def __init__(self, path=""):
         self.vendor_name = "Max Mustermann"
         self.vendor_job = "Jurist"
         self.vendor_address = "lautstraße 2"
@@ -10,8 +9,9 @@ class mypdf:
         self.vendor_city_key = "12345"
         self.vendor_phone = "0212/531762"
         self.vendor_iban = "DE12345678901234567890"
+        self.filepath = path
         self.get_vendor_info()
-        self.pdf = canvas.Canvas(self.filename)
+        
     
     def get_vendor_info(self):
         import os
@@ -32,7 +32,8 @@ class mypdf:
     def merge_modules_data_and_save(self,data):
         
         rn, Name, Adresse, Ort, Betreff, Datum, Betrag, Briefinhalt = data
-
+        abs_path = self.filepath + "/" + rn + ".pdf"
+        self.pdf = canvas.Canvas(abs_path)
         self.pdf.setTitle("Rechnung")
         mypdf.create_header(self, self.pdf, Datum)
         mypdf.create_kundendaten(self.pdf, Name, Adresse, Ort)

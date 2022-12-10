@@ -2,6 +2,12 @@ import database as db
 import customtkinter
 import ctk_classes as cc
 import pdf_gen as pg
+from tkinter import filedialog
+from tkinter import *
+import os
+from dotenv import load_dotenv
+
+        
 
 ### NEEDED DATA FOR BILL GENERATION ###
 Selected_User_ID = None
@@ -15,6 +21,9 @@ Selected_User_Betreff = ""
 Selected_User_Datum = ""
 Selected_User_Betrag = ""
 Selected_User_Briefinhalt = ""
+load_dotenv()
+Selected_User_Pfad = os.getenv('SAVE_PATH', "leer: store in project folder")
+
 
 def main():
     app = App()
@@ -87,15 +96,23 @@ class row3(customtkinter.CTkFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.button = customtkinter.CTkButton(self, text="Vorschau", command=self.preview_bill)
-        self.button.grid(row=0, column=0, padx=20, pady=20)
+        self.label = customtkinter.CTkLabel(self, text="Rechnung Speichern unter:\n" + Selected_User_Pfad)
+        self.label.grid(row=0, column=0, padx=20, pady=20)
 
-        self.button = customtkinter.CTkButton(self, text="Rechnung Erstellen", command=self.generate_bill)
+        self.button = customtkinter.CTkButton(self, text="Pfad wählen", command=self.create_file_input_dialog)
+        self.button.grid(row=1, column=0, padx=20, pady=20)
+
+        self.button = customtkinter.CTkButton(self, text="Vorschau", command=self.preview_bill)
         self.button.grid(row=2, column=0, padx=20, pady=20)
 
-        self.button = customtkinter.CTkButton(self, text="Neuer Kunde", command=self.create_new_window)
+        self.button = customtkinter.CTkButton(self, text="Rechnung Erstellen", command=self.generate_bill)
         self.button.grid(row=3, column=0, padx=20, pady=20)
+
+        self.button = customtkinter.CTkButton(self, text="Neuer Kunde", command=self.create_new_window)
+        self.button.grid(row=4, column=0, padx=20, pady=20)
         
+
+
 
     def preview_bill(self):
         #get all global variables
@@ -135,9 +152,10 @@ class row3(customtkinter.CTkFrame):
         global Selected_User_Datum
         global Selected_User_Betrag
         global Selected_User_Briefinhalt
+        global Selected_User_Pfad
         
         #update database
-        bill = pg.mypdf() #filename in here
+        bill = pg.mypdf(path=Selected_User_Pfad) #filename in here
         data = (Selected_User_rn, Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_Betreff, Selected_User_Datum, Selected_User_Betrag, Selected_User_Briefinhalt)
         bill.merge_modules_data_and_save(data)
         db.new_rechnung(Selected_User_ID, Selected_User_Name, Selected_User_Betreff, Selected_User_Datum, Selected_User_Betrag, Selected_User_rn)
@@ -146,16 +164,15 @@ class row3(customtkinter.CTkFrame):
     def create_new_window(self):
         self.input_user_window =  input_user_window()
 
-    def save_input_values(self):
-            global Selected_User_ID
-            global Selected_User_Name
-            global Selected_User_Adresse
-            global Selected_User_Ort
-            global Selected_User_rn
-            Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_rn = self.input_frame_1.get_values()
-            db.new_kunde(Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_rn)
-            self.destroy()
-            print("Kunde hinzugefügt")
+    def create_file_input_dialog(self):
+        global Selected_User_Pfad
+        Selected_User_Pfad =  filedialog.askdirectory(initialdir = "/")
+        self.label.destroy()
+        self.label = customtkinter.CTkLabel(self, text="Rechnung Speichern unter:\n" + Selected_User_Pfad)
+        self.label.grid(row=0, column=0, padx=20, pady=20)
+        # save path to env?
+        
+        
 
 class input_user_window(customtkinter.CTkToplevel):
     
