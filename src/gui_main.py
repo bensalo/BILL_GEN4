@@ -22,7 +22,7 @@ Selected_User_Datum = ""
 Selected_User_Betrag = ""
 Selected_User_Briefinhalt = ""
 load_dotenv()
-Selected_User_Pfad = os.getenv('SAVE_PATH', "leer: store in project folder")
+Selected_User_Pfad = os.getenv('SAVE_PATH', "")
 
 
 def main():
