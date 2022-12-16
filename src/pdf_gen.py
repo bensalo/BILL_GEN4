@@ -86,6 +86,6 @@ class mypdf:
 
 ## executíon example
 # test data
-# data = ("123456", "Sabine Salomon", "Binsenweg 2", "52076 Aachen", "für Yogastunden im November 2022", "01.11.2022", "100,00", "für die Yogastunden im November 2022")
+# data = ("123456", "Prename Name", "Straße 2", "12345 Berlin", "für auftrag X im November 2022", "01.11.2022", "100,00", "für den X. Auftrag im November 2022")
 # testbill = mypdf()    
 # testbill.merge_modules_data_and_save(data)
