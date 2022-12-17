@@ -92,7 +92,6 @@ class row2(customtkinter.CTkFrame):
 
 
 class row3(customtkinter.CTkFrame):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -105,15 +104,15 @@ class row3(customtkinter.CTkFrame):
         self.button = customtkinter.CTkButton(self, text="Vorschau", command=self.preview_bill)
         self.button.grid(row=2, column=0, padx=20, pady=20)
 
-        self.button = customtkinter.CTkButton(self, text="Rechnung Erstellen", command=self.generate_bill)
+        self.button = customtkinter.CTkButton(self, text="Rechnung Erstellen(DE_1)", command=self.generate_bill_1)
         self.button.grid(row=3, column=0, padx=20, pady=20)
 
-        self.button = customtkinter.CTkButton(self, text="Neuer Kunde", command=self.create_new_window)
+        self.button = customtkinter.CTkButton(self, text="Rechnung Erstellen(DE_2)", command=self.generate_bill_2)
         self.button.grid(row=4, column=0, padx=20, pady=20)
+
+        self.button = customtkinter.CTkButton(self, text="Neuer Kunde", command=self.create_new_window)
+        self.button.grid(row=5, column=0, padx=20, pady=20)
         
-
-
-
     def preview_bill(self):
         #get all global variables
         global Selected_User_ID
@@ -137,7 +136,13 @@ class row3(customtkinter.CTkFrame):
         print("Selected_User_Briefinhalt: ",Selected_User_Briefinhalt)
         print("--------------------")
 
-    def generate_bill(self):
+    def generate_bill_1(self):
+        self.generate_bill(1)
+    
+    def generate_bill_2(self):
+        self.generate_bill(2)
+
+    def generate_bill(self, template_number):
         #load template
         #edit word/pdf document
         #save document
@@ -153,11 +158,18 @@ class row3(customtkinter.CTkFrame):
         global Selected_User_Betrag
         global Selected_User_Briefinhalt
         global Selected_User_Pfad
-        
-        #update database
-        bill = pg.mypdf(path=Selected_User_Pfad) #filename in here
         data = (Selected_User_rn, Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_Betreff, Selected_User_Datum, Selected_User_Betrag, Selected_User_Briefinhalt)
-        bill.merge_modules_data_and_save(data)
+        #update database
+        
+        if template_number == 1:
+            bill = pg.mypdf(path=Selected_User_Pfad) #filename in here
+            bill.merge_modules_data_and_save(data)
+        elif template_number == 2:
+            bill2 = pg.mypdf1(path=Selected_User_Pfad) #filename in here
+            bill2.merge_modules_data_and_save(data)
+        else:
+            print("Error: Template not found")
+            return
         db.new_rechnung(Selected_User_ID, Selected_User_Name, Selected_User_Betreff, Selected_User_Datum, Selected_User_Betrag, Selected_User_rn)
         db.update_kunde(Selected_User_ID, Selected_User_rn)
 
@@ -170,7 +182,6 @@ class row3(customtkinter.CTkFrame):
         self.label.destroy()
         self.label = customtkinter.CTkLabel(self, text="Rechnung Speichern unter:\n" + Selected_User_Pfad)
         self.label.grid(row=0, column=0, padx=20, pady=20)
-        # save path to env?
         
         
 
