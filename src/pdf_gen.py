@@ -1,5 +1,6 @@
 from reportlab.pdfgen import canvas 
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import Paragraph
 # First Template (German)
 
 class mypdf:
@@ -93,12 +94,11 @@ class mypdf1:
         self.vendor_iban = "DE12345678901234567890"
         self.filepath = path
 
+        # Create a style sheet
         styles = getSampleStyleSheet()
 
-        # Define the font and font size
-        self.style = styles["Normal"]
-        self.style.fontName = "Helvetica"
-        self.style.fontSize = 12
+        # Define a new style called "Custom"
+        styles.add(ParagraphStyle(name='Custom', fontSize=14, leading=16, fontName='Helvetica'))
 
         self.get_vendor_info()
  
@@ -121,10 +121,10 @@ class mypdf1:
         abs_path = self.filepath + "/" + rn + ".pdf"
         self.pdf = canvas.Canvas(abs_path)
         self.pdf.setTitle("Rechnung")
-        mypdf.create_header(self, self.pdf, Datum)
-        mypdf.create_kundendaten(self.pdf, Name, Adresse, Ort)
-        mypdf.create_betreff(self.pdf, Betreff, rn)	
-        mypdf.create_briefinhalt(self, self.pdf, Briefinhalt, Betrag)
+        mypdf1.create_header(self, self.pdf, Datum)
+        mypdf1.create_kundendaten(self, self.pdf, Name, Adresse, Ort)
+        mypdf1.create_betreff(self, self.pdf, Betreff, rn)	
+        mypdf1.create_briefinhalt(self, self.pdf, Briefinhalt, Betrag)
         self.pdf.save() 
 
     def create_header(self, pdf, datum):
@@ -138,36 +138,44 @@ class mypdf1:
         pdf.drawText(text)
         pdf.line(30, 730, 550, 730)
 
-    def create_kundendaten(pdf, name, adresse, ort):
+    def create_kundendaten(self, pdf, name, adresse, ort):
             text = pdf.beginText(30, 710)
             text.textLine(name)
             text.textLine(adresse)
             text.textLine(ort)
             pdf.drawText(text)   
 
-    def create_betreff(pdf, betreff, rn_nr):
-        pdf.setFont("Times-Bold", 16)
+    def create_betreff(self, pdf, betreff, rn_nr):
+        pdf.setFont("Helvetica-Bold", 16)
         title = "Rechnung " + betreff
         title_rn = "Rechnungsnummer: " + rn_nr
         pdf.drawString(30, 600, title)
         pdf.drawString(30, 580, title_rn)
 
     def create_briefinhalt(self, pdf, briefinhalt, Betrag):
+        pdf.setFont("Helvetica", 12)
         text = pdf.beginText(30, 450)
         text.textLine("Sehr geehrte Damen und Herren,")
         text.textLine("")
-        text.textLine(briefinhalt + " bitte ich Sie " + Betrag + " Euro") 
-        text.textLine("auf mein Konto zu überweisen.")
+        text.textLine(briefinhalt + " bitte ich Sie " + Betrag + " Euro auf mein Konto zu überweisen.") 
         text.textLine("")
-        text.textLine("IBAN: " + self.vendor_iban)
-        text.textLine("Mit freundlichen Grüßen")
+        text.textLine("")   
+        text.textLine("")    
+        text.textLine("Mit freundlichen Grüßen,")
         text.textLine("")
         text.textLine(self.vendor_name)
         pdf.drawText(text)
-   
+        pdf.setFont("Helvetica-Bold", 12)
+        text = pdf.beginText(30, 390)
+        text.textLine("IBAN: " + self.vendor_iban)    
+        pdf.drawText(text)
 
-## executíon example
-# test data
-# data = ("123456", "Prename Name", "Straße 2", "12345 Berlin", "für auftrag X im November 2022", "01.11.2022", "100,00", "für den X. Auftrag im November 2022")
-# testbill = mypdf()    
-# testbill.merge_modules_data_and_save(data)
+
+# executíon example
+def test():
+    data = ("123456", "Prename Name", "Straße 2", "12345 Berlin", "für auftrag X im November 2022", "01.11.2022", "100,00", "für den X. Auftrag im November 2022")
+    testbill = mypdf1()    
+    testbill.filepath = "output"
+    testbill.merge_modules_data_and_save(data)
+
+test()
