@@ -157,7 +157,7 @@ class mypdf1:
         text = pdf.beginText(30, 450)
         text.textLine("Sehr geehrte Damen und Herren,")
         text.textLine("")
-        text.textLine(briefinhalt + " bitte ich Sie " + Betrag + " Euro auf mein Konto zu überweisen.") 
+        text.textLine(briefinhalt + " bitte ich Sie, " + Betrag + " Euro auf mein Konto zu überweisen.") 
         text.textLine("")
         text.textLine("")   
         text.textLine("")    
@@ -178,4 +178,4 @@ def test():
     testbill.filepath = "output"
     testbill.merge_modules_data_and_save(data)
 
-test()
+#test()
