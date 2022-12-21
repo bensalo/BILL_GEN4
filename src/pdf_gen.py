@@ -125,7 +125,8 @@ class mypdf1:
         mypdf1.create_kundendaten(self, self.pdf, Name, Adresse, Ort)
         mypdf1.create_betreff(self, self.pdf, Betreff, rn)	
         mypdf1.create_briefinhalt(self, self.pdf, Briefinhalt, Betrag)
-        self.pdf.save() 
+        self.pdf.save()
+        print("Rechnung " + rn + ".pdf wurde erstellt.") 
 
     def create_header(self, pdf, datum):
         pdf.drawString(420, 800, self.vendor_city + ", den " + datum)

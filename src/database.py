@@ -26,7 +26,7 @@ def update_kunde(kunden_id,letzte_rechnungsnummer):
 def new_rechnung(kunden_id, name, betreff, datum, betrag, rechnungsnummer):
     # function to store important data from a bill in the rechnungen.json database
     Rechnungen_DB.insert({'K_id' : str(kunden_id), 'name': name, 'betreff': betreff, 'datum': datum, 'betrag': betrag, 'rechnungsnummer': rechnungsnummer})
-    print("Rechnung wurde gespeichert")
+    print("Rechnung wurde gespeichert(DB)")
 
 def get_rechnungen():
     return Rechnungen_DB
