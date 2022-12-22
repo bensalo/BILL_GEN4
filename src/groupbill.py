@@ -14,7 +14,7 @@ rn = "user"
 name = "user"	
 adresse = "user"
 ort = "user"
-betreff = "Yogastunden 2022"
+betreff = "Yogastunden Q4 2022"
 datum = "22.12.2022"
 betrag = "user"
 briefinhalt = "Yogastunden 2022" 
@@ -33,7 +33,7 @@ def show_all_members():
 
 def create_group_bill():
     Group_Path = os.getenv('SAVE_PATH_GROUP', "")
-    pg1 = pg.mypdf1(path=Group_Path)
+    pg1 = pg.mypdf(path="C:\DATA\DOKUMENTE\MAMA")
     for member in yogaclass:
         print("Creating Bill for: ", member['name'])
         # get int input from console
@@ -57,7 +57,9 @@ def create_new_class_member():
     email = input("Email: ")
     new_class_member(rn, name, adresse, ort, email)
 
-#test
-#create_new_class_member()
-#create_new_class_member()
+# #test
+# while True:
+#     create_new_class_member()
+#     print("New Member added")
+
 create_group_bill()

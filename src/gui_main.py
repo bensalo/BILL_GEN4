@@ -7,8 +7,6 @@ from tkinter import *
 import os
 from dotenv import load_dotenv
 
-        
-
 ### NEEDED DATA FOR BILL GENERATION ###
 Selected_User_ID = None
 Selected_User_rn_temp = ""
@@ -24,11 +22,9 @@ Selected_User_Briefinhalt = ""
 load_dotenv()
 Selected_User_Pfad = os.getenv('SAVE_PATH', "")
 
-
 def main():
     app = App()
     app.mainloop()
-
 
 class row1(customtkinter.CTkFrame):
     def __init__(self, *args, **kwargs):
@@ -69,7 +65,6 @@ class row1(customtkinter.CTkFrame):
         self.kundendaten_frame = cc.show_values_Frame(self, header_name="Kundendaten", values = KundenDaten)
         self.kundendaten_frame.grid(row=0, column=1, sticky="NSEW", padx=20, pady=20)
 
-
 class row2(customtkinter.CTkFrame):
 
     def __init__(self, *args, **kwargs):
@@ -89,7 +84,6 @@ class row2(customtkinter.CTkFrame):
         global Selected_User_Betrag
         global Selected_User_Briefinhalt
         Selected_User_rn, Selected_User_Betreff, Selected_User_Datum, Selected_User_Betrag, Selected_User_Briefinhalt = self.input_frame_1.get_values()
-
 
 class row3(customtkinter.CTkFrame):
     def __init__(self, *args, **kwargs):
@@ -183,8 +177,6 @@ class row3(customtkinter.CTkFrame):
         self.label = customtkinter.CTkLabel(self, text="Rechnung Speichern unter:\n" + Selected_User_Pfad)
         self.label.grid(row=0, column=0, padx=20, pady=20)
         
-        
-
 class input_user_window(customtkinter.CTkToplevel):
     
         def __init__(self, *args, **kwargs):
@@ -201,10 +193,6 @@ class input_user_window(customtkinter.CTkToplevel):
             db.new_kunde(Selected_User_Name, Selected_User_Adresse, Selected_User_Ort, Selected_User_email, Selected_User_rn)
             self.destroy()
             print("Kunde hinzugefügt")
-
-        
-
-
 
 class App(customtkinter.CTk):
     def __init__(self):
