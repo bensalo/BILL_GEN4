@@ -81,7 +81,7 @@ class mypdf:
         text.textLine("")
         text.textLine("")   
         text.textLine("")    
-        text.textLine("Mit freundlichen Grüßen,")
+        text.textLine("Mit lieben Grüßen,")
         text.textLine("")
         text.textLine(self.vendor_name)
         pdf.drawText(text)

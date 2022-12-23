@@ -14,10 +14,10 @@ rn = "user"
 name = "user"	
 adresse = "user"
 ort = "user"
-betreff = "Yogastunden Q4 2022"
+betreff = "für Yogastunden Q4 2022"
 datum = "22.12.2022"
 betrag = "user"
-briefinhalt = "Yogastunden 2022" 
+briefinhalt = "für die Yogastunden im 4. Quartal 2022" 
 
 data = rn, name, adresse, ort, betreff, datum, betrag, briefinhalt
 # use this data to create a pdf, change some values and create another pdf for the next user
